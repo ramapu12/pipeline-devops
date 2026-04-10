@@ -1,0 +1,65 @@
+name: Pipeline CI/CD - DevOps Training
+ 
+# Se activa con cada push a main o a cualquier pull request
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+ 
+jobs:
+ 
+  # ── JOB 1: BUILD ──────────────────────────────
+  build:
+    name: Build y verificacion de entorno
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Descargar el codigo del repositorio
+        uses: actions/checkout@v3
+ 
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+ 
+      - name: Verificar versiones instaladas
+        run: |
+          python --version
+          pip --version
+ 
+  # ── JOB 2: TEST ───────────────────────────────
+  test:
+    name: Ejecutar pruebas automaticas
+    runs-on: ubuntu-latest
+    needs: build
+ 
+    steps:
+      - name: Descargar el codigo del repositorio
+        uses: actions/checkout@v3
+ 
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+ 
+      - name: Instalar pytest
+        run: pip install pytest
+ 
+      - name: Ejecutar tests
+        run: pytest test_app.py -v
+ 
+  # ── JOB 3: DEPLOY (simulado) ──────────────────
+  deploy:
+    name: Despliegue simulado
+    runs-on: ubuntu-latest
+    needs: test
+ 
+    steps:
+      - name: Simular despliegue en entorno staging
+        run: |
+          echo '✅ Build completado correctamente'
+          echo '✅ Todos los tests han pasado'
+          echo '🚀 Desplegando version 1.0.0 en staging...'
+          echo '✅ Despliegue completado'
+          
