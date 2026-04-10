@@ -1,7 +1,7 @@
 # app.py — Aplicacion de ejemplo para el pipeline DevOps
  
 def obtener_estado_pipeline():
-    return "Estado incorrecto" # <-- cambiado intencionalmente
+    return "Pipeline activo y funcionando"
  
 def calcular_version(major, minor, patch):
     return f"{major}.{minor}.{patch}"
